@@ -1,69 +1,50 @@
-# React + TypeScript + Vite
+# Test Task: Random Users Table (React + TypeScript)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project displays user data using the MUI DataGrid component and fetches users from the [Random User API](https://randomuser.me/) with filtering options (gender, nationality).  
+Pagination and filters are passed to the API via query parameters, and the table updates automatically when the page or filter changes.  
+The table includes the following columns:
 
-Currently, two official plugins are available:
+| First Name | Last Name | Gender | Email | Nationality |
+|------------|-----------|--------|-------|-------------|
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ✅ **Server-side Pagination**
+- ✅ **Server-side Filtering**
+  - Gender (All, Male, Female)
+  - Nationality (select from 5)
+- ✅ **Responsive Design (Material UI)**
+- ✅ **Reusable Components (e.g., GenderFilter, NationalityFilter)**
+- ✅ **TypeScript types for API responses**
+- ✅ **Reset Filters button**
+- ✅ **Error handling & loading states**
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
+| Layer       | Tools                                 |
+|-------------|---------------------------------------|
+| Frontend    | React, TypeScript, Vite, React Hooks             |
+| API         | Random User API                       |
+| Styling     | Material UI (MUI)                     |
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Running the Project
+
+### 1. Clone & install
+```bash
+git clone https://github.com/Ostrynska/user-table-app.git
+cd user-table-app
+npm install
+```
+### 2. Build & run the project
+```bash
+npm run build
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at http://localhost:5173
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Author
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Kateryna Ostrynska**  
+[GitHub](https://github.com/Ostrynska) | [Portfolio](https://ostrynska-kateryna.netlify.app)
