@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import Stack from '@mui/material/Stack';
-import { Link } from 'react-router';
 import ThemeSwitcher from './ThemeSwitcher';
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
@@ -36,6 +35,7 @@ export interface DashboardHeaderProps {
   title?: string;
   menuOpen: boolean;
   onToggleMenu: (open: boolean) => void;
+  onLogoClick?: () => void;
 }
 
 export default function DashboardHeader({
@@ -43,6 +43,7 @@ export default function DashboardHeader({
   title,
   menuOpen,
   onToggleMenu,
+  onLogoClick,
 }: DashboardHeaderProps) {
   const theme = useTheme();
 
@@ -89,7 +90,10 @@ export default function DashboardHeader({
         >
           <Stack direction="row" alignItems="center">
             <Box sx={{ mr: 1 }}>{getMenuIcon(menuOpen)}</Box>
-            <Link to="/" style={{ textDecoration: 'none' }}>
+            <Box
+              onClick={onLogoClick}
+              sx={{ cursor: 'pointer', textDecoration: 'none' }}
+            >
               <Stack direction="row" alignItems="center">
                 {logo ? <LogoContainer>{logo}</LogoContainer> : null}
                 {title ? (
@@ -109,12 +113,10 @@ export default function DashboardHeader({
                   </Typography>
                 ) : null}
               </Stack>
-            </Link>
+            </Box>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={1} sx={{ marginLeft: 'auto' }}>
-            <Stack direction="row" alignItems="center">
-              <ThemeSwitcher />
-            </Stack>
+            <ThemeSwitcher />
           </Stack>
         </Stack>
       </Toolbar>

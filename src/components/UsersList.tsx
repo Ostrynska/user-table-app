@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -13,11 +14,14 @@ import CustomToolbar from './CustomToolbar';
 import { INITIAL_PAGE_SIZE, PAGE_TITLE } from '../constants';
 
 export default function UsersList() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    page: 0,
+    page: Number(searchParams.get('page')) > 0 ? Number(searchParams.get('page')) - 1 : 0,
     pageSize: INITIAL_PAGE_SIZE,
   });
+  const [genderFilter, setGenderFilter] = useState<string>(searchParams.get('gender') || 'All');
 
+  const [selectedNationalities, setSelectedNationalities] = useState<string[]>(searchParams.get('nat')?.split(',') || []);
   const [rowsState, setRowsState] = useState<{
     rows: Users[];
     rowCount: number;
@@ -25,12 +29,8 @@ export default function UsersList() {
     rows: [],
     rowCount: 0,
   });
-
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-
-  const [genderFilter, setGenderFilter] = useState<string>('All');
-  const [selectedNationalities, setSelectedNationalities] = useState<string[]>([]);
 
   const loadData = useCallback(async () => {
     setError(null);
@@ -70,6 +70,26 @@ export default function UsersList() {
     loadData();
   }, [loadData]);
 
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    params.set('page', String(paginationModel.page + 1));
+
+    if (genderFilter !== 'All') {
+      params.set('gender', genderFilter);
+    } else {
+      params.delete('gender');
+    }
+
+    if (selectedNationalities.length > 0) {
+      params.set('nat', selectedNationalities.join(','));
+    } else {
+      params.delete('nat');
+    }
+
+    setSearchParams(params, { replace: true });
+  }, [paginationModel.page, genderFilter, selectedNationalities, setSearchParams]);
+
   const handlePaginationModelChange = useCallback((model: GridPaginationModel) => {
     setPaginationModel(model);
   }, []);
@@ -78,7 +98,6 @@ export default function UsersList() {
     setGenderFilter('All');
     setSelectedNationalities([]);
     setPaginationModel({ page: 0, pageSize: INITIAL_PAGE_SIZE });
-    loadData();
   };
 
   const rows = useMemo(

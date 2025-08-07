@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { GridPaginationModel, GridFilterModel } from '@mui/x-data-grid';
 
 export interface Users {
@@ -19,10 +20,27 @@ export async function getUsers({
   const results = paginationModel.pageSize;
   const page = paginationModel.page + 1;
 
-  const res = await fetch(
-    `https://randomuser.me/api/?page=${page}&results=${results}`
-  );
-  const data = await res.json();
+  const params: Record<string, string> = {
+    page: String(page),
+    results: String(results),
+  };
+
+  const genderFilter = filterModel.items.find((item) => item.field === 'gender');
+  if (genderFilter && genderFilter.value && genderFilter.value !== 'All') {
+    params.gender = genderFilter.value.toLowerCase();
+  }
+
+  const nationalityFilter = filterModel.items.find((item) => item.field === 'nat');
+  if (
+    nationalityFilter &&
+    nationalityFilter.value &&
+    Array.isArray(nationalityFilter.value) &&
+    nationalityFilter.value.length > 0
+  ) {
+    params.nat = nationalityFilter.value.join(',').toUpperCase();
+  }
+
+  const { data } = await axios.get('https://randomuser.me/api/', { params });
 
   type ApiUser = {
     login: { uuid: string };
@@ -32,7 +50,7 @@ export async function getUsers({
     nat: string;
   };
 
-  let items: Users[] = data.results.map((user: ApiUser) => ({
+  const items: Users[] = data.results.map((user: ApiUser) => ({
     id: user.login.uuid,
     first: user.name.first,
     last: user.name.last,
@@ -40,17 +58,6 @@ export async function getUsers({
     email: user.email,
     nat: user.nat,
   }));
-
-  const genderFilter = filterModel.items.find((item) => item.field === 'gender');
-  if (genderFilter && genderFilter.value && genderFilter.value !== 'All') {
-    items = items.filter((user) => user.gender.toLowerCase() === genderFilter.value.toLowerCase());
-  }
-
-  const nationalityFilter = filterModel.items.find((item) => item.field === 'nat');
-  if (nationalityFilter && nationalityFilter.value && Array.isArray(nationalityFilter.value)) {
-    const selectedNationalities = nationalityFilter.value.map((nat) => nat.toUpperCase());
-    items = items.filter((user) => selectedNationalities.includes(user.nat.toUpperCase()));
-  }
 
   return {
     items,
