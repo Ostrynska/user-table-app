@@ -17,6 +17,7 @@ The table includes the following columns:
   - Gender (All, Male, Female)
   - Nationality (select from 5)
 - ✅ **Responsive Design (Material UI)**
+- ✅ **Theme switcher**
 - ✅ **Reusable Components (e.g., GenderFilter, NationalityFilter)**
 - ✅ **TypeScript types for API responses**
 - ✅ **Reset Filters button**
