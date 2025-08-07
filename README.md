@@ -21,6 +21,7 @@ The table includes the following columns:
 - ✅ **Reusable Components (e.g., GenderFilter, NationalityFilter)**
 - ✅ **TypeScript types for API responses**
 - ✅ **Reset Filters button**
+- ✅ **Persist current page and filters in URL query parameters**
 - ✅ **Error handling & loading states**
 
 ## Tech Stack
