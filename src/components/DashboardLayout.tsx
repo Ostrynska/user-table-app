@@ -3,16 +3,13 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import DashboardHeader from './DashboardHeader';
 import DashboardSidebar from './DashboardSidebar';
 import SitemarkIcon from './SitemarkIcon';
 
 export default function DashboardLayout() {
   const theme = useTheme();
-  const [resetCallback, setResetCallback] = useState<null | (() => void)>(null);
-  const navigate = useNavigate();
-
   const [isDesktopNavigationExpanded, setIsDesktopNavigationExpanded] = useState(true);
   const [isMobileNavigationExpanded, setIsMobileNavigationExpanded] = useState(false);
 
@@ -40,11 +37,6 @@ export default function DashboardLayout() {
     [setIsNavigationExpanded]
   );
 
-  const handleLogoClick = useCallback(() => {
-    navigate({ pathname: '/', search: '' });
-    if (resetCallback) resetCallback();
-  }, [navigate, resetCallback]);
-
   const layoutRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -63,7 +55,6 @@ export default function DashboardLayout() {
         title="Random Users"
         menuOpen={isNavigationExpanded}
         onToggleMenu={handleToggleHeaderMenu}
-        onLogoClick={handleLogoClick}
       />
       <DashboardSidebar
         expanded={isNavigationExpanded}
@@ -88,7 +79,7 @@ export default function DashboardLayout() {
             overflow: 'auto',
           }}
         >
-          <Outlet context={{ onLogoReset: setResetCallback }} />
+          <Outlet />
         </Box>
       </Box>
     </Box>

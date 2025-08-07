@@ -35,7 +35,6 @@ export interface DashboardHeaderProps {
   title?: string;
   menuOpen: boolean;
   onToggleMenu: (open: boolean) => void;
-  onLogoClick?: () => void;
 }
 
 export default function DashboardHeader({
@@ -43,7 +42,6 @@ export default function DashboardHeader({
   title,
   menuOpen,
   onToggleMenu,
-  onLogoClick,
 }: DashboardHeaderProps) {
   const theme = useTheme();
 
@@ -91,7 +89,6 @@ export default function DashboardHeader({
           <Stack direction="row" alignItems="center">
             <Box sx={{ mr: 1 }}>{getMenuIcon(menuOpen)}</Box>
             <Box
-              onClick={onLogoClick}
               sx={{ cursor: 'pointer', textDecoration: 'none' }}
             >
               <Stack direction="row" alignItems="center">
