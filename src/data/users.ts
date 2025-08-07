@@ -17,11 +17,10 @@ export async function getUsers({
   filterModel: GridFilterModel;
 }): Promise<{ items: Users[]; itemCount: number }> {
   const results = paginationModel.pageSize;
-  const seed = 'your-app-seed';
   const page = paginationModel.page + 1;
 
   const res = await fetch(
-    `https://randomuser.me/api/?page=${page}&results=${results}&seed=${seed}`
+    `https://randomuser.me/api/?page=${page}&results=${results}`
   );
   const data = await res.json();
 
@@ -42,13 +41,11 @@ export async function getUsers({
     nat: user.nat,
   }));
 
-  // Filter by gender
   const genderFilter = filterModel.items.find((item) => item.field === 'gender');
   if (genderFilter && genderFilter.value && genderFilter.value !== 'All') {
     items = items.filter((user) => user.gender.toLowerCase() === genderFilter.value.toLowerCase());
   }
 
-  // Filter by nationality
   const nationalityFilter = filterModel.items.find((item) => item.field === 'nat');
   if (nationalityFilter && nationalityFilter.value && Array.isArray(nationalityFilter.value)) {
     const selectedNationalities = nationalityFilter.value.map((nat) => nat.toUpperCase());
