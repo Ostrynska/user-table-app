@@ -7,6 +7,8 @@ The table includes the following columns:
 | First Name | Last Name | Gender | Email | Nationality |
 |------------|-----------|--------|-------|-------------|
 
+<img width="3612" height="2142" alt="image" src="https://github.com/user-attachments/assets/d168fc0b-f218-4cb0-80b5-072b89cb74f3" />
+
 
 ## Features
 
@@ -15,6 +17,7 @@ The table includes the following columns:
   - Gender (All, Male, Female)
   - Nationality (select from 5)
 - ✅ **Responsive Design (Material UI)**
+- ✅ **Theme switcher**
 - ✅ **Reusable Components (e.g., GenderFilter, NationalityFilter)**
 - ✅ **TypeScript types for API responses**
 - ✅ **Reset Filters button**
